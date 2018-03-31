@@ -1,4 +1,8 @@
 //where does it get called from?
+var db = require("../models");
+var axios = require("axios");
+
+module.exports = function(app) {
 
 app.get("/scrape", function(req, res) {
     // First, we grab the body of the html with request
@@ -10,8 +14,7 @@ app.get("/scrape", function(req, res) {
       $(".stream li").each(function(i, element) {
         // Save an empty result object
         var result = {};
-        //testing
-  
+          
         result.link = $(this).find("a").attr("href");
         result.title = $(this).find("h2").text();
         result.summary = $(this).find("p").text();
@@ -32,3 +35,5 @@ app.get("/scrape", function(req, res) {
       res.send("Scrape Complete");
     });
   });
+
+}
