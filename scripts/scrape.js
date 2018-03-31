@@ -10,6 +10,7 @@ app.get("/scrape", function(req, res) {
       $(".stream li").each(function(i, element) {
         // Save an empty result object
         var result = {};
+        //testing
   
         result.link = $(this).find("a").attr("href");
         result.title = $(this).find("h2").text();
