@@ -1,18 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">American Princess Bride</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">My Articles Vault <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Saved Articles </a>
+         <li class="nav-item">
+        <a class="nav-link" href="/saved">Saved Articles </a>
       </li>
       </ul>
   </div>
@@ -21,30 +15,8 @@
 	<section class="jumbotron text-center">
 		<!-- Modal -->
 		<!-- Button trigger modal -->
-		<button id="modal" type="button" class="btn  btn-info" data-toggle="modal" data-target="#myModal">
-		  How to Use
-		</button>
-
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		 	 <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-				    <div class="modal-header">
-				        <h5 class="modal-title" id="exampleModalLabel">Test</h5>
-				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				          <span aria-hidden="true">&times;</span>
-				        </button>
-				    </div>
-			     	 <div class="modal-text modal-body">
-
-				        <p>Test</p>
-					</div>
-				    <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				    </div>
-				</div>
-		  	</div>
-		</div>
+	<h1>American Princess Bride</h1>
+    <button id="search-button" type="submit" class="btn btn-primary">Fetch New Articles</button>
 	</section>
 
 	<!-- Card deck for the dynamically-generated vault -->
@@ -58,7 +30,7 @@
                 <h3 class="panel-title pull-left"><a href={{this.link}} target="_new">{{this.title}}</a></h3>
                 </div>
                 <div class="col-xs-3">
-                    <button type="submit" class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button>
+                    <button class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button>
                 </form>
                 </div>
             </div>

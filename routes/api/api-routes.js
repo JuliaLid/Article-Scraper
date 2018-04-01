@@ -1,7 +1,9 @@
 //replace router with app and then call the fetch controller to get all records from the db
 var axios = require("axios");
+var cheerio = require("cheerio");
 var db = require("../../models");
 var Headline = require("../../models/Headline.js");
+var scrape = require('../../scripts/scrape.js');
 
 module.exports = function(app){
   app.get("/", function(req, res) {
@@ -17,53 +19,62 @@ module.exports = function(app){
               articles: doc
           };
 
-          console.log(hbsArticleObject);
-          
+
           res.render("home", hbsArticleObject);
           }
     });
   });
 
   app.get("/scrape", function(req, res) {
-    // First, we grab the body of the html with request
     axios.get("https://www.nytimes.com/spotlight/royal-wedding").then(function(response) {
       // Then, we load that into cheerio and save it to $ for a shorthand selector
       var $ = cheerio.load(response.data);
+      var titlesArray = [];
   
-      // Now, we grab every h2 within an article tag, and do the following:
       $(".stream li").each(function(i, element) {
         // Save an empty result object
-        var result = {};
-      
-        result.title = $(this).find("h2").text();
-        result.summary = $(this).find("p").text();
-        result.link = $(this).find("a").attr("href");
-        // console.log(result)
-        // Create a new Article using the `result` object built from scraping
-        db.Headline.create(result)
-          .then(function(dbHeadline) {
-            // View the added result in the console
-            console.log(dbHeadline);
-          })
-          .catch(function(err) {
-            // If an error occurred, send it to the client
-            return res.json(err);
-          });
+			var result = {};
+		
+			result.title = $(this).find("h2").text();
+			result.summary = $(this).find("p").text();
+			result.link = $(this).find("a").attr("href");
+        	   
+	
+			if(result.title !== "" && result.link !== "" && result.summary !==""){
+				if(titlesArray.indexOf(result.title) == -1){
+				// push the saved title to the array 
+					titlesArray.push(result.title);
+
+					// only add the article if is not already there
+					Headline.count({ title: result.title}, function (err, test){
+							//if the test is 0, the entry is unique and good to save
+						if(test == 0){
+
+						//using Article model, create new object
+							var entry = new Headline (result);
+
+						//save entry to mongodb
+							entry.save(function(err, doc) {
+								if (err) {
+									console.log(err);
+								} else {
+									console.log(doc);
+								}
+							});
+						}
+					});
+				}
+		// Log that scrape is working, just the content was missing parts
+			else{
+			console.log('Article already exists.')
+			}
+				
+			} else {
+					console.log("Missing data")
+			}
+		});
+           res.redirect('/');
       });
-  
-      // If we were able to successfully scrape and save an Article, send a message to the client
-    //   res.send("Scrape Complete");
-      var hbsArticleObject = {
-        articles: dbHeadline
-    };
-
-    res.render("home", hbsArticleObject);
-    });
   });
-
-
-
-
-
 
 };  

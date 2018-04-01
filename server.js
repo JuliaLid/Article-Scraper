@@ -19,7 +19,7 @@ app.use(express.static("public"));
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-require("./scripts/scrape.js")(app);
+// require("./scripts/scrape.js")(app);
 require("./routes/api/api-routes.js")(app);
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
