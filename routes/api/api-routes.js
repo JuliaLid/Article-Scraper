@@ -77,4 +77,41 @@ module.exports = function(app){
       });
   });
 
+  app.post("/save/:id", function(req, res) {
+	Headline.findById(req.params.id, function(err, data) {
+		if (data.issaved) {
+			Headline.findByIdAndUpdate(req.params.id, {$set: {issaved: false, status: "Save Article"}}, {new: true}, function(err, data) {
+				
+				res.redirect("/");
+			});
+		}
+		else {
+			Headline.findByIdAndUpdate(req.params.id, {$set: {issaved: true, status: "Saved"}}, {new: true}, function(err, data) {
+				console.log("Saved");
+				res.redirect("/saved");
+			});
+		}
+	});
+});
+
+app.get("/saved", function(req, res) {
+	Headline.find({issaved: true}, null, {sort: {created: -1}}, function(err, data) {
+		if(data.length === 0) {
+			// res.render("placeholder", {message: "You have not saved any articles yet. Try to save some delicious news by simply clicking \"Save Article\"!"});
+			console.log('There are no saved articles');
+		}
+		else {
+			// res.render("saved", {saved: data});
+			var hbsArticleObject = {
+				articles: data
+			};
+  
+  
+			res.render("saved", hbsArticleObject);
+		}
+	});
+});
+
+
+
 };  

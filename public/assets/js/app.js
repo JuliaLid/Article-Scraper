@@ -14,6 +14,19 @@ $(document).ready(function() {
           method: "GET",
           url: "/scrape",
         })
-        
     });
+
+    $(".btn-default").on("click", function() {
+        // Grab the id associated with the article from the submit button
+        var thisId = $(this).attr("data-id");
+        console.log("Saving article");
+        console.log(thisId);
+        // Run a POST request to change the note, using what's entered in the inputs
+        $.ajax({
+          method: "POST",
+          url: "/save/" + thisId
+        })
+    });
+
+
 });

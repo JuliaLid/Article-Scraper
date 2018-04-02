@@ -18,7 +18,14 @@ var HeadlineSchema = new Schema({
     type: String,
     required: true
   },
-
+  issaved:{
+    type:Boolean,
+    default:false
+  },
+  created: {
+		type: Date,
+		default: Date.now
+	},
   note: {
     type: Schema.Types.ObjectId,
     ref: "Note"
