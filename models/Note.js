@@ -5,7 +5,14 @@ var Schema = mongoose.Schema;
 
 var NoteSchema = new Schema({
  
-  body: String
+  body: {
+    type: String,
+    required: true
+  },
+    created: {
+		type: Date,
+		default: Date.now
+	}
 });
 
 // This creates our model from the above schema, using mongoose's model method

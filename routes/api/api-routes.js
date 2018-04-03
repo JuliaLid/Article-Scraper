@@ -8,7 +8,7 @@ var scrape = require('../../scripts/scrape.js');
 module.exports = function(app){
   app.get("/", function(req, res) {
     
-      Headline.find().sort({_id: -1})
+      Headline.find({issaved:false}).sort({_id: -1})
       //send to handlebars
       .exec(function(err, doc) {
           if(err){
@@ -112,6 +112,17 @@ app.get("/saved", function(req, res) {
 	});
 });
 
-
+	app.post("/delete/:id", function(req, res) {
+		console.log("line 116",req.params.id);
+	
+		Headline.remove({"_id": req.params.id}, function(err, data) {
+			if (err) {
+				console.log("Not able to delete:" + err);
+			  } else {
+				console.log("Article deleted");
+			  }
+			  res.redirect("/saved");
+		});
+	});
 
 };  

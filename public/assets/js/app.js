@@ -16,7 +16,7 @@ $(document).ready(function() {
         })
     });
 
-    $(".btn-default").on("click", function() {
+    $(".save-article button").on("click", function() {
         // Grab the id associated with the article from the submit button
         var thisId = $(this).attr("data-id");
         console.log("Saving article");
@@ -26,7 +26,22 @@ $(document).ready(function() {
           method: "POST",
           url: "/save/" + thisId
         })
+        location.reload(); //is there a better way?
     });
+
+    $(".delete-article button").on("click", function() {
+        // Grab the id associated with the article from the submit button
+        var thisId = $(this).attr("data-id");
+        console.log("Deleting article");
+        console.log(thisId);
+        // Run a POST request to change the note, using what's entered in the inputs
+        $.ajax({
+          method: "POST",
+          url: "/delete/" + thisId
+        })
+        location.reload(); //is there a better way?
+    });
+
 
 
 });
