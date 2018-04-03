@@ -3,6 +3,7 @@ var axios = require("axios");
 var cheerio = require("cheerio");
 var db = require("../../models");
 var Headline = require("../../models/Headline.js");
+var Note = require("../../models/Note.js");
 var scrape = require('../../scripts/scrape.js');
 
 module.exports = function(app){
@@ -122,6 +123,69 @@ app.get("/saved", function(req, res) {
 				console.log("Article deleted");
 			  }
 			  res.redirect("/saved");
+		});
+	});
+
+	//Get notes when modal is clicked 	
+	app.get("/articles/:id", function(req, res) {
+
+		console.log("Aricle id:", req.params.id);
+	  
+		// Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+		Headline.findOne({"_id": req.params.id})
+	  
+		.populate("note")
+		.then(function(dbArticle) {
+		  // If we were able to successfully find an Article with the given id, send it back to the client
+		  console.log("line 140",dbArticle);
+		  res.json(dbArticle);
+		})
+		.catch(function(err) {
+		  // If an error occurred, send it to the client
+		  res.json(err);
+		});
+
+
+
+		// .populate('note')
+	  
+		// .exec(function(err, found) {
+		//   if (err) {
+		// 	console.log("Not able to find article and get notes.");
+		//   }
+		//   else {
+		// 	console.log("Trying to get notes " + found);
+		// 	res.json(found);
+		//   }
+		// });
+	  });
+
+	  // Create a new note or replace an existing note
+	app.post("/articles/:id", function(req, res) {
+
+	// Create a new note and pass the req.body to the entry
+		var newNote = new Note(req.body);
+		// And save the new note the db
+		newNote.save(function(error, doc) {
+			// Log any errors
+			if (error) {
+				console.log(error);
+			} else {
+			// Use the article id to find it and then push note
+			Headline.findOneAndUpdate({ "_id": req.params.id },  {$push: {notes: doc._id}}, {new: true, upsert: true})
+
+			.populate('note')
+
+			.exec(function (err, doc) {
+				console.log("Article updated");
+				if (err) {
+					console.log("Cannot find article.");
+				} else {
+					console.log("On note save we are getting notes? " + doc.notes);
+					res.send(doc);
+				}
+			});
+			}
 		});
 	});
 
