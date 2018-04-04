@@ -14,6 +14,10 @@ $(document).ready(function() {
           method: "GET",
           url: "/scrape",
         })
+        .done(function(data) {
+            console.log(data);
+            window.location.href = "/";
+        });
     });
 
     $(".save-article button").on("click", function() {
@@ -26,7 +30,12 @@ $(document).ready(function() {
           method: "POST",
           url: "/save/" + thisId
         })
-        location.reload(); //is there a better way?
+        .done(function(data) {
+            console.log(data);
+            window.location.href = "/";
+        });
+       
+        
     });
 
     $(".delete-article button").on("click", function() {
@@ -59,8 +68,7 @@ $(document).ready(function() {
           // With that done, add the note information to the page
           .done(function(data) {
             console.log(data);
-            // Placeholder for notes
-            $(".modal-footer").empty();
+           
 
             $("#note-text").append("<p id='actualnotes'></p>");
             if (data.note) {
@@ -115,10 +123,12 @@ $(document).ready(function() {
         })
          .done(function(data) {
             console.log(data);
+            $("#message-text").val("");
+            $(".modal-footer").empty();
             $('#myModal').modal('hide')
           });
         // Also, remove the values entered in the input and textarea for note entry
-        $("#message-text").val("");
+       
       });
 
       $(document).on("click", "#deletenote", function() {

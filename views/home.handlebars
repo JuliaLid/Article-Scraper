@@ -12,49 +12,46 @@
   </div>
 </nav>
 
-	<section class="jumbotron text-center">
+<section class="jumbotron text-center">
 		<!-- Modal -->
 		<!-- Button trigger modal -->
 	<h1>American Princess Bride</h1>
     <button id="search-button" type="submit" class="btn btn-primary">Fetch New Articles</button>
-	</section>
+</section>
 
 	<!-- Card deck for the dynamically-generated vault -->
-	<div class="container">
+<div class="container">
     <div class="row">
         <div class="col-md-12">
-        {{#each articles}}
-            <div class="panel panel-primary">
-            <div class="panel-heading row">
-                <div class="col-xs-9">
-                <h3 class="panel-title pull-left"><a href={{this.link}} target="_new">{{this.title}}</a></h3>
+            {{#each articles}}
+                <div class="panel panel-primary">
+                <div class="panel-heading row">
+                    <div class="col-xs-9">
+                        <h3 class="panel-title pull-left"><a href={{this.link}} target="_new">{{this.title}}</a></h3>
+                        </div>
+                        <div class=" save-article col-xs-3">
+                            <button type="submit" class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button>
+                        </div>
+                    </div>
+                <div class="row">
+                    <div class="col-xs-12>">
+                    <div class="panel-body">
+                        <p>{{this.summary}}</p>
+                    </div>
+                    </div>
                 </div>
-                <div class=" save-article col-xs-3">
-                    <button type="submit" class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button>
-                </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12>">
-                <div class="panel-body">
-                    <p>{{this.summary}}</p>
-                </div>
-                </div>
-            </div>
             </div>
         {{/each}}
-        </div>
     </div>
 </div>
 
-	<!-- Footer -->
-	<footer class="text-muted">
-		<div>
-			<p class="float-right">
-				<a href="#">Back to top</a>
-			</p>
-					<p>View code on
-				<a href="#"> GitHub</a>
-			</p>
-		</div>
-	</footer>
+
+
+</div>
+
+<footer class="footer">
+    <div class="container">
+            <p><a href="/api/friends">API Friends List </a> | <a href="https://github.com/JuliaLid/Friend-Finder-App-Using-Node-and-Express-Servers" target="_blank" >GitHub Repo</a></p>
+    </div>
+</footer>
+
