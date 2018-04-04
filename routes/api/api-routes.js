@@ -168,11 +168,10 @@ app.get("/saved", function(req, res) {
 		// And save the new note the db
 		newNote.save(function(error, doc) {
 			// Log any errors
-			if (error) {
-				console.log(error);
-			} else {
+			if (error) throw error;
 			// Use the article id to find it and then push note
-			Headline.findOneAndUpdate({ "_id": req.params.id },  {$push: {notes: doc._id}}, {new: true, upsert: true})
+			console.log("Note Id :", doc._id);
+			Headline.findOneAndUpdate({ "_id": req.params.id },  {$push: {note: doc._id}}, {new: true, upsert: true})
 
 			.populate('note')
 
@@ -185,8 +184,25 @@ app.get("/saved", function(req, res) {
 					res.send(doc);
 				}
 			});
-			}
+			
 		});
 	});
+
+	app.get("/notes/:id", function(req, res) {
+
+		console.log("Note ID ", req.params.id);
+	  
+		console.log("Able to activate delete function.");
+	  
+		Note.findOneAndRemove({"_id": req.params.id}, function (err, doc) {
+		  if (err) {
+			console.log("Not able to delete:" + err);
+		  } else {
+			console.log("Able to delete, Yay");
+		  }
+		  res.send(doc);
+		});
+	  });
+
 
 };  

@@ -58,8 +58,10 @@ $(document).ready(function() {
         })
           // With that done, add the note information to the page
           .done(function(data) {
-            console.log(data.note.body);
+            console.log(data);
             // Placeholder for notes
+            $(".modal-footer").empty();
+
             $("#note-text").append("<p id='actualnotes'></p>");
             if (data.note) {
               $("#actualnotes").append("<ul id='notelist'>");
@@ -69,6 +71,7 @@ $(document).ready(function() {
                   "<button data-id='" + data.note[i]._id +
                   "' id='deletenote'>X</button></li>");
                 }
+                
               $('#actualnotes').append("</ul>");
             } else {
               $('#actualnotes').text("There aren't any notes yet.");
@@ -92,6 +95,7 @@ $(document).ready(function() {
             // // A button to submit a new note, with the id of the article saved to it
             // $("#notes-text").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
           });
+        
       });
 
     $(document).on("click", "#savenote", function() {
@@ -109,17 +113,27 @@ $(document).ready(function() {
             body: $("#message-text").val()
           }
         })
-          // With that done
-        //   .done(function(data) {
-        //     $("#notelist").empty();
-        //     for (var i = 0; i < data.notes.length; i++) {
-        //       $("#notelist").append("<li id='" + data.notes[i]._id + "'>" + data.notes[i].body + " " + "<button data-id='" + data.notes[i]._id +
-        //       "' id='deletenote'>X</button></li>");
-        //     }
-        //   });
+         .done(function(data) {
+            console.log(data);
+            $('#myModal').modal('hide')
+          });
         // Also, remove the values entered in the input and textarea for note entry
-        $("#bodyinput").val("");
+        $("#message-text").val("");
       });
 
+      $(document).on("click", "#deletenote", function() {
+        // Grab the id associated with the note
+        var thisId = $(this).attr("data-id");
+        // Run a POST request to delete the note
+        $.ajax({
+          method: "GET",
+          url: "/notes/" + thisId,
+        })
+          // With that done
+          .done(function(data) {
+              console.log(data);
+            $("#" + data._id).remove();
+          });
+      });
 
 });

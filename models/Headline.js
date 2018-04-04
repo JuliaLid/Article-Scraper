@@ -26,10 +26,10 @@ var HeadlineSchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-  note: {
+  note: [{
     type: Schema.Types.ObjectId,
     ref: "Note"
-  }
+  }]
 });
 
 // This creates our model from the above schema, using mongoose's model method
