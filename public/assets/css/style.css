@@ -1,0 +1,64 @@
+/* .jumbotron{
+    background: url(../img/jumbotron.jpg) no-repeat center center; 
+    -webkit-background-size: 100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    background-size: 100% 100%;
+    
+} */
+body {
+    
+    font-family: 'Open Sans', sans-serif;
+}
+
+.jumbotron {
+    background-image: url("../img/jumbotron.jpg");
+    background-size: cover;
+    padding: 7rem;
+  
+}
+
+h1 {
+   color: #fffebc;
+    font-size: 6rem;
+    font-family: 'Allura', cursive;
+    -webkit-text-stroke: 1px #193421;
+    font-weight: 400;
+}
+
+#search-button {
+    margin-top: 5rem;
+    padding: 1rem;
+    background-color: #fffebc;
+    color: #193421;
+    border: #193421;
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+}
+
+ #search-button:hover{
+    color:  #193421;
+   
+} 
+
+#navigation{
+    background-color: #fffebc!important;
+}
+
+#logo {
+    font-family: 'Allura', cursive;
+    font-size: 2rem;
+    font-weight: bold;
+   color: #193421;
+}
+
+#logo img {
+   margin-right: 10px;
+}
+
+#navbarNav a {
+    color: #193421;
+    font-weight: bold;
+}
+
