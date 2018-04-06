@@ -20,7 +20,7 @@ $(document).ready(function() {
         });
     });
 
-    $(".save-article button").on("click", function() {
+    $(document).on("click","#save-article", function() {
         // Grab the id associated with the article from the submit button
         var thisId = $(this).attr("data-id");
         console.log("Saving article");

@@ -1,23 +1,21 @@
 <nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
-  
-  <a id="logo" class="navbar-brand" href="/">
-     <img src="/assets/img/tiara.svg" width="60" height="60" alt="Picture of tiara">American Princess Bride
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
+    <a id="logo" class="navbar-brand" href="/"><span>
+        <img src="/assets/img/tiara.svg" width="60" height="60" alt="Picture of tiara"></span>American Princess Bride
+     </a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="nav navbar-nav mr-auto"></ul> 
-    <ul class="nav navbar-nav ">
-         <li class="nav-item">
-        <a class="nav-link " href="/saved">Saved Articles </a>
-      </li>
-      </ul>
-  </div>
+         <ul class="nav navbar-nav ">
+            <li class="nav-item">
+            <a class="nav-link " href="/saved">Saved Articles </a>
+            </li>
+        </ul>
+    </div>
 </nav>
 
 <div class="jumbotron text-center">
-        {{!-- <img src="/assets/img/tiara1.png" alt="Picture of tiara"> --}}
 	<h1>American Princess Bride</h1>
     <button id="search-button" type="submit" class="btn btn-primary">Fetch New Articles</button>
 </div>
@@ -26,35 +24,23 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            {{#each articles}}
-                <div class=" panel-primary">
-                <div class="panel-heading row">
-                    <div class="col-xs-9">
-                        <h3 class="panel-title pull-left"><a href={{this.link}} target="_new">{{this.title}}</a></h3>
-                        </div>
-                        <div class=" save-article col-xs-3">
-                            <button type="submit" class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button>
-                        </div>
-                    </div>
-                <div class="row">
-                    <div class="col-xs-12>">
-                    <div class="panel-body">
+            <ul class="list-group">
+                {{#each articles}}
+                     <li class="list-group-item">
+                        <h3><a href={{this.link}} target="_new">{{this.title}}</a><span><button type="submit" id= "save-article" class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button> </span></h3>  
                         <p>{{this.summary}}</p>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        {{/each}}
+                     </li>
+                {{/each}}
+            </ul>
+        </div>
     </div>
 </div>
 
-
-
-</div>
-
-<footer class="footer">
+<footer class="footer" id="page-footer">
     <div class="container">
-            <p><a href="/api/friends">API Friends List </a> | <a href="https://github.com/JuliaLid/Friend-Finder-App-Using-Node-and-Express-Servers" target="_blank" >GitHub Repo</a></p>
+        <div class="footer-copyright py-3 text-center">
+                © 2018
+             <a href="https://mdbootstrap.com/material-design-for-bootstrap/"> GitHub </a>
+         </div>
     </div>
 </footer>
-
