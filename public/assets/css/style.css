@@ -97,8 +97,10 @@ h1 {
     color: #fffebc;
 }
 
-#delete-article {
+#delete-article, #savenote {
     background-color: #fffebc;
     color: #193421;
     border: 1px solid #193421;
+    font-weight: bold;
 }
+
