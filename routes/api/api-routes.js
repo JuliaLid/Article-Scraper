@@ -15,8 +15,6 @@ module.exports = function(app){
 					};
 					res.render("home", hbsArticleObject);
 			});
-		
-		     
   });
 
   app.get("/scrape", function(req, res) {
@@ -72,21 +70,9 @@ module.exports = function(app){
   });
 
   app.post("/save/:id", function(req, res) {
-	Headline.findById(req.params.id, function(err, data) {
-		if (data.issaved) {
-			Headline.findByIdAndUpdate(req.params.id, {$set: {issaved: false, status: "Save Article"}}, {new: true}, function(err, data) {
-				
-				res.redirect("/");
-			});
-		}
-		else {
-			Headline.findByIdAndUpdate(req.params.id, {$set: {issaved: true, status: "Saved"}}, {new: true}, function(err, data) {
-				console.log("Saved");
-				res.redirect("/saved");
-			});
-		}
+			HeadlineController.saveArticle(req);	
+			res.send('success');
 	});
-});
 
 app.get("/saved", function(req, res) {
 	Headline.find({issaved: true}, null, {sort: {created: -1}}, function(err, data) {
