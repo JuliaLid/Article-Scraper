@@ -1,31 +1,26 @@
 $(document).ready(function() {
-    //Make a    aler call to API-Routes to fetch all headlines from the database
-    $.get("/", function(data) {
-        // console.log(data);
-      });
+      //on-click event to initialize the scrape of articles 
+	$("#search-button").on("click", function() {
+		console.log("I'm clicked");
+		
+		$.ajax({
+		method: "GET",
+		url: "/scrape",
+		})
+		.done(function(data) {
+			console.log(data);
+			window.location.href = "/";
+		});
+	});
 
-   
-      $("#search-button").on("click", function() {
-        // Grab the id associated with the article from the submit button
-        // var thisId = $(this).attr("data-id");
-        console.log("I'm clicked");
-        // Run a POST request to change the note, using what's entered in the inputs
-        $.ajax({
-          method: "GET",
-          url: "/scrape",
-        })
-        .done(function(data) {
-            console.log(data);
-            window.location.href = "/";
-        });
-    });
-
+		//on-click event to save an article on the home page 
     $(document).on("click","#save-article", function() {
         // Grab the id associated with the article from the submit button
         var thisId = $(this).attr("data-id");
-        console.log("Saving article");
+		   
+		console.log("Saving article");
         console.log(thisId);
-        // Run a POST request to change the note, using what's entered in the inputs
+     
         $.ajax({
           method: "POST",
           url: "/save/" + thisId
@@ -34,44 +29,41 @@ $(document).ready(function() {
             console.log(data);
             window.location.href = "/";
         });
-       
-        
     });
 
+	//on-click event to delete an article on the Saved page
     $(document).on("click","#delete-article", function() {
-        // Grab the id associated with the article from the submit button
-        var thisId = $(this).attr("data-id");
+        
+		var thisId = $(this).attr("data-id");
+		 // Grab the id associated with the article from the submit button
         console.log("Deleting article");
         console.log(thisId);
-        // Run a POST request to change the note, using what's entered in the inputs
+        
         $.ajax({
           method: "POST",
           url: "/delete/" + thisId
-        })
-        location.reload(); //is there a better way?
+        });
+		window.location.href = "/saved";
     });
 
+	//modal to
     $(document).on("click","#modalbutton", function() {
         console.log("Modal button is clicked");
-        // Empty the notes from the note section
+        // Empty the notes from the note section and remove dynamically generated Save note button
         $("#note-text").empty();
+        $("#savenote").remove();
         // Save the id from the button tag
         var thisId = $(this).attr("data-id");
-        
-        // $("#articleID").text(thisId);
-      
-        // Now make an ajax call for the Article
         $.ajax({
           method: "GET",
           url: "/articles/" + thisId
         })
-          // With that done, add the note information to the page
+          // With that done, add the note information to the page dynamically
           .done(function(data) {
             console.log(data);
-           
-
-            $("#note-text").append("<p id='actualnotes'></p>");
-            if (data.note) {
+	        $("#note-text").append("<p id='actualnotes'></p>");
+	
+			if (data.note) {
               $("#actualnotes").append("<ul id='notelist'>");
 
                 for (var i = 0; i < data.note.length; i++) {
@@ -93,25 +85,19 @@ $(document).ready(function() {
             var modalSaveButton = $('<button type="submit" class="btn btn-primary float-left" data-id='+ data._id + ' id="savenote">Save Note</button>');
 
             var modalFooterDiv = $(modalSaveButton).appendTo(modalFooter);
-            // textAreaDiv.append(textAreaLabel).append(textArea).append(modalFooter).append(modalSaveButton);
-           textAreaLabel.append(textArea);
+         	  textAreaLabel.append(textArea);
 
             $("#note-text").append(textAreaLabel);
             $(".modal-footer").append(modalSaveButton);
+        });
+     });
 
-            // $("#note-text").append("<textarea id='bodyinput' name='body'></textarea>");
-            // // A button to submit a new note, with the id of the article saved to it
-            // $("#notes-text").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
-          });
-        
-      });
-
+	 //on-click to save a note
     $(document).on("click", "#savenote", function() {
         // Grab the id associated with the article from the submit button
-       console.log("Saving note");
+      	 console.log("Saving note");
        
         var thisId = $(this).attr("data-id");
-        // Run a POST request to change the note, using what's entered in the inputs
         
         $.ajax({
           method: "POST",
@@ -126,25 +112,22 @@ $(document).ready(function() {
             $("#message-text").val("");
             $(".modal-footer").empty();
             $('#myModal').modal('hide')
-          });
-        // Also, remove the values entered in the input and textarea for note entry
-       
-      });
+        });
+    });
 
-      $(document).on("click", "#deletenote", function() {
-        // Grab the id associated with the note
-        var thisId = $(this).attr("data-id");
-        // Run a POST request to delete the note
-        $.ajax({
-          method: "GET",
-          url: "/notes/" + thisId,
-        })
-          // With that done
-          .done(function(data) {
-              console.log(data);
-            $("#" + data._id).remove();
-            $("hr").remove();
-          });
-      });
-
+	//on-click to delete a note
+	$(document).on("click", "#deletenote", function() {
+	// Grab the id associated with the note
+	var thisId = $(this).attr("data-id");
+	// Run a POST request to delete the note
+	$.ajax({
+		method: "GET",
+		url: "/notes/" + thisId,
+	})
+		.done(function(data) {
+			console.log(data);
+		$("#" + data._id).remove();
+		$("hr").remove();
+		});
+	});
 });
