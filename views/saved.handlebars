@@ -1,65 +1,76 @@
-<nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a id="logo" class="navbar-brand" href="/"><span>
-        <img src="/assets/img/tiara.svg" width="60" height="60" alt="Picture of tiara"></span>American Princess Bride
-     </a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="nav navbar-nav mr-auto"></ul> 
-         <ul class="nav navbar-nav ">
-            <li class="nav-item">
-           		 <a class="nav-link " href="/">Articles Vault </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<wrapper class="d-flex flex-column">
+	<nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
+		<a id="logo" class="navbar-brand" href="/"><span>
+			<img src="/assets/img/tiara.svg" width="60" height="60" alt="Picture of tiara"></span>American Princess Bride
+		</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+			</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="nav navbar-nav mr-auto"></ul> 
+			<ul class="nav navbar-nav ">
+				<li class="nav-item">
+					<a class="nav-link " href="/">Articles Vault </a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
-<section class="jumbotron text-center">
-		
-	<h1>American Princess Bride</h1>
-	    
-</section>
-<!-- Main container -->
-<div class="container">
-	<div class="row">
-    	<div class="col-md-12">
-			 <ul class="list-group">
-     			 {{#each articles}}
-				  	<li class="list-group-item">
-						<h3><a href={{this.link}} target="_new">{{this.title}}</a>
-						</h3>
+		<section class="jumbotron text-center">
+				
+			<h1>American Princess Bride</h1>
+				
+		</section>
+	<main class="container-fluid py-3 flex-fill">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="list-group">
+						{{#each articles}}
+							<li class="list-group-item">
+								<h3><a href={{this.link}} target="_new">{{this.title}}</a>
+								</h3>
 
-						<button id="modalbutton" type="button" class="btn btn-default float-right"  data-toggle="modal" data-id={{this.id}} data-target="#myModal">Add a Note</button>
+								<button id="modalbutton" type="button" class="btn btn-default float-right"  data-toggle="modal" data-id={{this.id}} data-target="#myModal">Add a Note</button>
 
-						<button id="delete-article"type="submit" class="btn btn-default float-right" data-id={{this.id}}>Delete Aricle </button> 
-						<div>
-								<p>{{this.summary}}</p>
-						</div>
-                     </li>
-			     {{/each}}
-	 		 </ul>
-   		 </div>
- 	 </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" area-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-   		 <div class="modal-content">
-      		<div class="modal-header">
-				<h5 class="modal-title" id="myModalLabel">Notes for Article</h5>
-        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-				</button>
-      		</div>
-  		    <div class="modal-body">
-		 		 <div id="note-text">
-
+								<button id="delete-article"type="submit" class="btn btn-default float-right" data-id={{this.id}}>Delete Aricle </button> 
+								<div>
+										<p>{{this.summary}}</p>
+								</div>
+							</li>
+						{{/each}}
+					</ul>
 				</div>
-      		</div>
-	  		<div class="modal-footer">
-         
-     		</div>
-   		 </div>
- 	 </div>
-</div>
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" area-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myModalLabel">Notes for Article</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div id="note-text">
+
+						</div>
+					</div>
+					<div class="modal-footer">
+				
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<footer class="container-fluid w-100  py-3" id="page-footer">
+		
+			<div class="footer-copyright py-3 text-center">
+					© 2018
+				<a href="https://github.com/JuliaLid/Article-Scraper/" target="_blank"> GitHub </a>
+			</div>
+	
+	</footer>
+</wrapper>

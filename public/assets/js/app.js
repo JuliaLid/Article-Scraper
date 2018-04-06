@@ -76,8 +76,8 @@ $(document).ready(function() {
 
                 for (var i = 0; i < data.note.length; i++) {
                   $('#notelist').append("<li id='" + data.note[i]._id + "'>" + data.note[i].body + " " +
-                  "<button data-id='" + data.note[i]._id +
-                  "' id='deletenote'>X</button></li>");
+                  "<button class='float-right' data-id='" + data.note[i]._id +
+                  "' id='deletenote'>X</button></li><hr>");
                 }
                 
               $('#actualnotes').append("</ul>");
@@ -143,6 +143,7 @@ $(document).ready(function() {
           .done(function(data) {
               console.log(data);
             $("#" + data._id).remove();
+            $("hr").remove();
           });
       });
 

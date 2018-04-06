@@ -1,46 +1,46 @@
-<nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a id="logo" class="navbar-brand" href="/"><span>
-        <img src="/assets/img/tiara.svg" width="60" height="60" alt="Picture of tiara"></span>American Princess Bride
-     </a>
-         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-         <span class="navbar-toggler-icon"></span>
-         </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="nav navbar-nav mr-auto"></ul> 
-         <ul class="nav navbar-nav ">
-            <li class="nav-item">
-            <a class="nav-link " href="/saved">Saved Articles </a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<div class="jumbotron text-center">
-	<h1>American Princess Bride</h1>
-    <button id="search-button" type="submit" class="btn btn-primary">Fetch New Articles</button>
-</div>
-
-	<!-- Card deck for the dynamically-generated vault -->
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <ul class="list-group">
-                {{#each articles}}
-                     <li class="list-group-item">
-                        <h3><a href={{this.link}} target="_new">{{this.title}}</a><span><button type="submit" id= "save-article" class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button> </span></h3>  
-                        <p>{{this.summary}}</p>
-                     </li>
-                {{/each}}
+<wrapper class="d-flex flex-column">
+    <nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
+        <a id="logo" class="navbar-brand" href="/"><span>
+            <img src="/assets/img/tiara.svg" width="60" height="60" alt="Picture of tiara"></span>American Princess Bride
+        </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="nav navbar-nav mr-auto"></ul> 
+            <ul class="nav navbar-nav ">
+                <li class="nav-item">
+                <a class="nav-link " href="/saved">Saved Articles </a>
+                </li>
             </ul>
         </div>
-    </div>
-</div>
+    </nav>
 
-<footer class="footer" id="page-footer">
-    <div class="container">
+    <div class="jumbotron text-center">
+        <h1>American Princess Bride</h1>
+        <button id="search-button" type="submit" class="btn btn-primary">Fetch New Articles</button>
+    </div>
+
+    <main class="container-fluid py-3 flex-fill">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="list-group">
+                        {{#each articles}}
+                            <li class="list-group-item">
+                                <h3><a href={{this.link}} target="_new">{{this.title}}</a><span><button type="submit" id= "save-article" class="btn btn-default float-right" data-id = {{this.id}}>Save Article</button> </span></h3>  
+                                <p>{{this.summary}}</p>
+                            </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="container-fluid w-100  py-3" id="page-footer">
         <div class="footer-copyright py-3 text-center">
                 © 2018
-             <a href="https://mdbootstrap.com/material-design-for-bootstrap/"> GitHub </a>
-         </div>
-    </div>
-</footer>
+            <a href="https://github.com/JuliaLid/Article-Scraper/" target="_blank"> GitHub </a>
+        </div>
+	</footer>
+</wrapper>

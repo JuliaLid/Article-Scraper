@@ -1,11 +1,4 @@
-/* .jumbotron{
-    background: url(../img/jumbotron.jpg) no-repeat center center; 
-    -webkit-background-size: 100% 100%;
-    -moz-background-size: 100% 100%;
-    -o-background-size: 100% 100%;
-    background-size: 100% 100%;
-    
-} */
+
 body {
     
     font-family: 'Open Sans', sans-serif;
@@ -15,6 +8,7 @@ body {
     background-image: url("../img/jumbotron.jpg");
     background-size: cover;
     padding: 7rem;
+    min-height: 400px;
   
 }
 
@@ -104,3 +98,11 @@ h1 {
     font-weight: bold;
 }
 
+#deletenote {
+    color: #fffebc;
+    background-color: #193421;
+}
+
+footer {
+    margin-top: 3rem;
+}
