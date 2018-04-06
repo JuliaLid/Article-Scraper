@@ -1,77 +1,65 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">American Princess Bride</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-         <li class="nav-item">
-        <a class="nav-link" href="/">My Articles Vault </a>
-      </li>
-      </ul>
-  </div>
+<nav id="navigation" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a id="logo" class="navbar-brand" href="/"><span>
+        <img src="/assets/img/tiara.svg" width="60" height="60" alt="Picture of tiara"></span>American Princess Bride
+     </a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="nav navbar-nav mr-auto"></ul> 
+         <ul class="nav navbar-nav ">
+            <li class="nav-item">
+           		 <a class="nav-link " href="/">Articles Vault </a>
+            </li>
+        </ul>
+    </div>
 </nav>
 
 <section class="jumbotron text-center">
-		<!-- Modal -->
-		<!-- Button trigger modal -->
+		
 	<h1>American Princess Bride</h1>
-	<h5>Saved Articles</h5>
-    
-	</section>
+	    
+</section>
 <!-- Main container -->
 <div class="container">
-   <div class="row">
-    <div class="col-md-12">
-      {{#each articles}}
-        <div class="panel panel-primary">
-          <div class="panel-heading row">
-           <div class="col-xs-6">
-                <h3 class="panel-title pull-left"><a href={{this.link}} target="_new">{{this.title}}</a></h3>
-                </div>
-            <div class="col-xs-3">
-              <button id="modalbutton" type="button" class="btn btn-default float-right"  data-toggle="modal" data-id={{this.id}} data-target="#myModal">Add a Note</button>
-            </div>
-            <div class="delete-article col-xs-3">
-                 <button type="submit" class="btn btn-default float-right" data-id={{this.id}}>Delete Aricle </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-6>">
-              <div class="panel-body">
-                <p>{{this.summary}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      {{/each}}
-    </div>
-  </div>
+	<div class="row">
+    	<div class="col-md-12">
+			 <ul class="list-group">
+     			 {{#each articles}}
+				  	<li class="list-group-item">
+						<h3><a href={{this.link}} target="_new">{{this.title}}</a>
+						</h3>
+
+						<button id="modalbutton" type="button" class="btn btn-default float-right"  data-toggle="modal" data-id={{this.id}} data-target="#myModal">Add a Note</button>
+
+						<button id="delete-article"type="submit" class="btn btn-default float-right" data-id={{this.id}}>Delete Aricle </button> 
+						<div>
+								<p>{{this.summary}}</p>
+						</div>
+                     </li>
+			     {{/each}}
+	 		 </ul>
+   		 </div>
+ 	 </div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" area-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-		<h5 class="modal-title" id="myModalLabel">Notes for Article</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-		</button>
-      </div>
-      <div class="modal-body">
-		  <div id="note-text">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+   		 <div class="modal-content">
+      		<div class="modal-header">
+				<h5 class="modal-title" id="myModalLabel">Notes for Article</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+				</button>
+      		</div>
+  		    <div class="modal-body">
+		 		 <div id="note-text">
 
-		  </div>
-        {{!-- <form>
-           <div class="form-group">
-            <label for="message-text" class="col-form-label">Add a Note:</label>
-            <textarea class="form-control" rows="10" id="message-text"></textarea>
-          </div>
-        </form> --}}
-      </div>
-	  <div class="modal-footer">
-          {{!-- <button type="button" class="btn btn-primary">Save Note</button> --}}
-      </div>
-    </div>
-  </div>
+				</div>
+      		</div>
+	  		<div class="modal-footer">
+         
+     		</div>
+   		 </div>
+ 	 </div>
 </div>

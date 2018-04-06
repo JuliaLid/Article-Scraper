@@ -38,7 +38,7 @@ $(document).ready(function() {
         
     });
 
-    $(".delete-article button").on("click", function() {
+    $(document).on("click","#delete-article", function() {
         // Grab the id associated with the article from the submit button
         var thisId = $(this).attr("data-id");
         console.log("Deleting article");
