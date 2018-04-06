@@ -7,102 +7,93 @@ var Note = require("../../models/Note.js");
 var scrape = require('../../scripts/scrape.js');
 
 module.exports = function(app){
-  app.get("/", function(req, res) {
-			HeadlineController.findAllUnsaved(function(data){
-				console.log("line 12",data);
-				var hbsArticleObject = {
-							articles: data
-					};
-					res.render("home", hbsArticleObject);
-			});
-  });
+  	app.get("/", function(req, res) {
+		HeadlineController.renderUnsavedArticles(function(data){
+			console.log("Unsaved articles ",data);
+			var hbsArticleObject = {
+						articles: data
+				};
+				res.render("home", hbsArticleObject);
+		});
+ 	});
 
-  app.get("/scrape", function(req, res) {
-    axios.get("https://www.nytimes.com/spotlight/royal-wedding").then(function(response) {
-      // Then, we load that into cheerio and save it to $ for a shorthand selector
-      var $ = cheerio.load(response.data);
-      var titlesArray = [];
-  
-      $(".stream li").each(function(i, element) {
-        // Save an empty result object
-			var result = {};
-		
-			result.title = $(this).find("h2").text();
-			result.summary = $(this).find("p").text();
-			result.link = $(this).find("a").attr("href");
-        	   
+	app.get("/scrape", function(req, res) {
+		axios.get("https://www.nytimes.com/spotlight/royal-wedding").then(function(response) {
+		// Then, we load that into cheerio and save it to $ for a shorthand selector
+		var $ = cheerio.load(response.data);
+		var titlesArray = [];
 	
-			if(result.title !== "" && result.link !== "" && result.summary !==""){
-				if(titlesArray.indexOf(result.title) == -1){
-				// push the saved title to the array 
-					titlesArray.push(result.title);
-
-					// only add the article if is not already there
-					Headline.count({ title: result.title}, function (err, test){
-							//if the test is 0, the entry is unique and good to save
-						if(test == 0){
-
-						//using Article model, create new object
-							var entry = new Headline (result);
-
-						//save entry to mongodb
-							entry.save(function(err, doc) {
-								if (err) {
-									console.log(err);
-								} else {
-									console.log(doc);
-								}
-							});
-						}
-					});
-				}
-		// Log that scrape is working, just the content was missing parts
-			else{
-			console.log('Article already exists.')
-			}
+		$(".stream li").each(function(i, element) {
+			// Save an empty result object
+				var result = {};
+			
+				result.title = $(this).find("h2").text();
+				result.summary = $(this).find("p").text();
+				result.link = $(this).find("a").attr("href");
 				
+		
+				if(result.title !== "" && result.link !== "" && result.summary !==""){
+					if(titlesArray.indexOf(result.title) == -1){
+					// push the saved title to the array 
+						titlesArray.push(result.title);
+
+						// only add the article if is not already there
+						Headline.count({ title: result.title}, function (err, test){
+								//if the test is 0, the entry is unique and good to save
+							if(test == 0){
+
+							//using Article model, create new object
+								var entry = new Headline (result);
+
+							//save entry to mongodb
+								entry.save(function(err, doc) {
+									if (err) {
+										console.log(err);
+									} else {
+										console.log(doc);
+									}
+								});
+							}
+						});
+					}
+			// Log that scrape is working, just the content was missing parts
+				else{
+				console.log('Article already exists.')
+				}
+					
+				} else {
+						console.log("Missing data")
+				}
+			});
+			res.redirect('/');
+		});
+	});
+
+ 	 app.post("/save/:id", function(req, res) {
+		HeadlineController.saveArticle(req);	
+		res.send('success');
+	});
+
+	app.get("/saved", function(req, res) {
+
+		HeadlineController.renderSavedArticles(function(data){
+			console.log("Saved articles",data);
+			
+			if(data.length === 0) {
+				// res.render("placeholder", {message: "You have not saved any articles yet. Try to save some delicious news by simply clicking \"Save Article\"!"});
+				console.log('There are no saved articles');
 			} else {
-					console.log("Missing data")
+				var hbsArticleObject = {
+						articles: data
+				};
+				res.render("saved", hbsArticleObject);
 			}
 		});
-           res.redirect('/');
-      });
-  });
-
-  app.post("/save/:id", function(req, res) {
-			HeadlineController.saveArticle(req);	
-			res.send('success');
 	});
-
-app.get("/saved", function(req, res) {
-	Headline.find({issaved: true}, null, {sort: {created: -1}}, function(err, data) {
-		if(data.length === 0) {
-			// res.render("placeholder", {message: "You have not saved any articles yet. Try to save some delicious news by simply clicking \"Save Article\"!"});
-			console.log('There are no saved articles');
-		}
-		else {
-			// res.render("saved", {saved: data});
-			var hbsArticleObject = {
-				articles: data
-			};
-  
-  
-			res.render("saved", hbsArticleObject);
-		}
-	});
-});
 
 	app.post("/delete/:id", function(req, res) {
-		console.log("line 116",req.params.id);
-	
-		Headline.remove({"_id": req.params.id}, function(err, data) {
-			if (err) {
-				console.log("Not able to delete:" + err);
-			  } else {
-				console.log("Article deleted");
-			  }
-			  res.redirect("/saved");
-		});
+		HeadlineController.deleteArticle(req);	
+		res.send('success');
 	});
 
 	//Get notes when modal is clicked 	

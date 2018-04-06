@@ -1,7 +1,7 @@
 var Note = require("../models/Note.js");
 var Headline = require("../models/Headline.js");
 
-exports.findAllUnsaved = function(cb) {
+exports.renderUnsavedArticles = function(cb) {
     Headline.find({issaved:false}).sort({_id: -1})
     //send to handlebars
     .exec(function(err, doc) {
@@ -22,6 +22,28 @@ exports.saveArticle = function(req){
                 console.log("Article is saved")
             }
     });
-            
+};
 
+
+exports.renderSavedArticles = function(cb){
+    Headline.find({issaved: true}).sort({created: -1})
+    
+    .exec(function(err, doc) {
+        if(err){
+            console.log(err);
+        } else{
+            cb(doc);
+        }
+  });
+}
+
+exports.deleteArticle = function(req){
+
+    Headline.remove({"_id": req.params.id}, function(err, data) {
+        if (err) {
+            console.log("Not able to delete:" + err);
+          } else {
+            console.log("Article deleted");
+          }
+    });
 }

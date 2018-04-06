@@ -1,5 +1,6 @@
 //fix router to app
-var db = require("./models");
+// var db = require("../models/index.js");
+var db = require("../models/index.js");
 
 exports.scrapeHeadlines = function(req,res){
     
