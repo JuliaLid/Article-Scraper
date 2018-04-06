@@ -2,28 +2,21 @@
 var axios = require("axios");
 var cheerio = require("cheerio");
 var db = require("../../models");
-var Headline = require("../../models/Headline.js");
+var HeadlineController = require("../../controllers/headline.js");
 var Note = require("../../models/Note.js");
 var scrape = require('../../scripts/scrape.js');
 
 module.exports = function(app){
   app.get("/", function(req, res) {
-    
-      Headline.find({issaved:false}).sort({_id: -1})
-      //send to handlebars
-      .exec(function(err, doc) {
-          if(err){
-              console.log(err);
-          } else{
-         
-            var hbsArticleObject = {
-              articles: doc
-          };
-
-
-          res.render("home", hbsArticleObject);
-          }
-    });
+			HeadlineController.findAllUnsaved(function(data){
+				console.log("line 12",data);
+				var hbsArticleObject = {
+							articles: data
+					};
+					res.render("home", hbsArticleObject);
+			});
+		
+		     
   });
 
   app.get("/scrape", function(req, res) {
