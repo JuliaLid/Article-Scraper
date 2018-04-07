@@ -34,8 +34,12 @@ h1 {
 
  #search-button:hover{
     color:  #193421;
-   
 } 
+
+#search-button:focus, #delete-article:focus {
+    outline:#193421;
+    box-shadow: 0 0 0 0.2rem #193421;
+}
 
 #navigation{
     background-color: #fffebc!important;
@@ -60,6 +64,11 @@ h1 {
 #save-article {
     background-color: #193421;
     color: #fffebc;
+}
+
+#save-article:focus, #modalbutton:focus {
+    outline:#193421;
+    box-shadow: 0 0 0 0.2rem #fffebc;
 }
 
 .list-group-item p {
@@ -105,4 +114,8 @@ h1 {
 
 footer {
     margin-top: 3rem;
+}
+
+footer a {
+    color: #193421;
 }
