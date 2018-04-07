@@ -39,7 +39,7 @@ exports.scrapeHeadlines = function(){
                         if (err) {
                           console.log(err);
                         } else {
-                          console.log(doc);
+                          console.log("line 41",doc);
                         }
                       });
                     }
@@ -50,7 +50,8 @@ exports.scrapeHeadlines = function(){
               } else {
                   console.log("Missing data")
               }
+              // cb(doc);
             });
-          
+              
           });
 };

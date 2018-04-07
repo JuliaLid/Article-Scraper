@@ -9,8 +9,10 @@ $(document).ready(function() {
 		})
 		.done(function(data) {
 			console.log(data);
-			window.location.href = "/";
-		});
+       window.location.href = "/";
+      // location.reload();
+    });
+ 
 	});
 
 		//on-click event to save an article on the home page 

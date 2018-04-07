@@ -35,12 +35,18 @@ exports.postNotes = function(req){
 				if (err) {
 					console.log("Cannot find article.");
                 }
-			});
-			
 		});
-
-
-
-
+	});
 }
 
+exports.deleteNotes = function(req){
+    Note.findOneAndRemove({"_id": req.params.id}, function (err, doc) {
+        if (err) {
+          console.log("Not able to delete:" + err);
+        } else {
+          console.log("Note deleted");
+        }
+       
+      });
+    
+}

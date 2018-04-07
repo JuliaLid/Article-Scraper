@@ -3,6 +3,9 @@ var HeadlineController = require("../../controllers/headline.js");
 var ScrapeController = require("../../controllers/fetch.js");
 var NotesController = require("../../controllers/note.js");
 var Note = require("../../models/Note.js");
+var Headline = require("../../models/Headline.js");
+var axios = require("axios");
+var cheerio = require("cheerio");
 var scrape = require('../../scripts/scrape.js');
 
 module.exports = function(app){
@@ -16,11 +19,15 @@ module.exports = function(app){
 		});
  	});
 
-	app.get("/scrape", function(req, res) {
-		ScrapeController.scrapeHeadlines();	
-		res.send('success');
-			// res.redirect('/');
-	});
+	// app.get("/scrape", function(req, res) {
+	// 	ScrapeController.scrapeHeadlines();
+	// 	res.send('success');
+	// 		// res.redirect('/');
+			
+		
+	// 		// res.redirect('/');
+	// });
+
 
 
  	 app.post("/save/:id", function(req, res) {
@@ -60,8 +67,13 @@ module.exports = function(app){
 	  // Create a new note or replace an existing note
 	app.post("/articles/:id", function(req, res) {
 		NotesController.postNotes(req);
-		res.send('success');
+		res.send('Successfully saved note');
 	});
+
+	// app.get("/notes/:id", function(req, res) {
+	// 	NotesController.deleteNotes(req);
+	// 	res.send('Successfully deleted note');
+	// });
 
 	app.get("/notes/:id", function(req, res) {
 
@@ -79,5 +91,56 @@ module.exports = function(app){
 		});
 	  });
 
-
+	  
+	app.get("/scrape", function(req, res) {
+		axios.get("https://www.nytimes.com/spotlight/royal-wedding").then(function(response) {
+		  // Then, we load that into cheerio and save it to $ for a shorthand selector
+		  var $ = cheerio.load(response.data);
+		  var titlesArray = [];
+	  
+		  $(".stream li").each(function(i, element) {
+			// Save an empty result object
+				var result = {};
+			
+				result.title = $(this).find("h2").text();
+				result.summary = $(this).find("p").text();
+				result.link = $(this).find("a").attr("href");
+				   
+		
+				if(result.title !== "" && result.link !== "" && result.summary !==""){
+					if(titlesArray.indexOf(result.title) == -1){
+					// push the saved title to the array 
+						titlesArray.push(result.title);
+	
+						// only add the article if is not already there
+						Headline.count({ title: result.title}, function (err, test){
+								//if the test is 0, the entry is unique and good to save
+							if(test == 0){
+	
+							//using Article model, create new object
+								var entry = new Headline (result);
+	
+							//save entry to mongodb
+								entry.save(function(err, doc) {
+									if (err) {
+										console.log(err);
+									} else {
+										console.log(doc);
+									}
+								});
+							}
+						});
+					}
+			// Log that scrape is working, just the content was missing parts
+				else{
+				console.log('Article already exists.')
+				}
+					
+				} else {
+						console.log("Missing data")
+				}
+			});
+			   res.redirect('/');
+		  });
+	  });
 };  
