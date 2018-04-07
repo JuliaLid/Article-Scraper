@@ -4,7 +4,7 @@ var Headline = require("../models/Headline.js");
 var axios = require("axios");
 var cheerio = require("cheerio");
 
-exports.scrapeHeadlines = function(){
+exports.scrapeHeadlines = function(cb){
         axios.get("https://www.nytimes.com/spotlight/royal-wedding")
         
         .then(function(response) {
@@ -40,6 +40,7 @@ exports.scrapeHeadlines = function(){
                           console.log(err);
                         } else {
                           console.log("line 41",doc);
+                          cb(doc);
                         }
                       });
                     }

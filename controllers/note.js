@@ -39,12 +39,13 @@ exports.postNotes = function(req){
 	});
 }
 
-exports.deleteNotes = function(req){
+exports.deleteNotes = function(req,cb){
     Note.findOneAndRemove({"_id": req.params.id}, function (err, doc) {
         if (err) {
           console.log("Not able to delete:" + err);
         } else {
           console.log("Note deleted");
+          cb(doc);
         }
        
       });

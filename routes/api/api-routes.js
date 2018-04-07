@@ -70,28 +70,29 @@ module.exports = function(app){
 		res.send('Successfully saved note');
 	});
 
-	// app.get("/notes/:id", function(req, res) {
-	// 	NotesController.deleteNotes(req);
-	// 	res.send('Successfully deleted note');
-	// });
-
 	app.get("/notes/:id", function(req, res) {
-
-		console.log("Note ID ", req.params.id);
-	  
-		console.log("Able to activate delete function.");
-	  
-		Note.findOneAndRemove({"_id": req.params.id}, function (err, doc) {
-		  if (err) {
-			console.log("Not able to delete:" + err);
-		  } else {
-			console.log("Able to delete, Yay");
-		  }
-		  res.send(doc);
+		NotesController.deleteNotes(req, function(data){
+			res.json(data);
 		});
-	  });
+	});
 
+	// app.get("/notes/:id", function(req, res) {
+
+	// 	console.log("Note ID ", req.params.id);
 	  
+	// 	console.log("Able to activate delete function.");
+	  
+	// 	Note.findOneAndRemove({"_id": req.params.id}, function (err, doc) {
+	// 	  if (err) {
+	// 		console.log("Not able to delete:" + err);
+	// 	  } else {
+	// 		console.log("Able to delete, Yay");
+	// 	  }
+	// 	  res.send(doc);
+	// 	});
+	//   });
+
+
 	app.get("/scrape", function(req, res) {
 		axios.get("https://www.nytimes.com/spotlight/royal-wedding").then(function(response) {
 		  // Then, we load that into cheerio and save it to $ for a shorthand selector
