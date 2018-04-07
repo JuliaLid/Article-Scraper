@@ -1,4 +1,4 @@
-//replace router with app and then call the fetch controller to get all records from the db
+//Dependencies
 var HeadlineController = require("../../controllers/headline.js");
 var ScrapeController = require("../../controllers/fetch.js");
 var NotesController = require("../../controllers/note.js");
@@ -9,6 +9,7 @@ var cheerio = require("cheerio");
 var scrape = require('../../scripts/scrape.js');
 
 module.exports = function(app){
+	//get all articles 	
   	app.get("/", function(req, res) {
 		HeadlineController.renderUnsavedArticles(function(data){
 			// console.log("Unsaved articles ",data);
@@ -19,17 +20,7 @@ module.exports = function(app){
 		});
  	});
 
-	// app.get("/scrape", function(req, res) {
-	// 	ScrapeController.scrapeHeadlines();
-	// 	res.send('success');
-	// 		// res.redirect('/');
-			
-		
-	// 		// res.redirect('/');
-	// });
-
-
-
+	 //save article
  	 app.post("/save/:id", function(req, res) {
 		HeadlineController.saveArticle(req);	
 		res.send('success');
@@ -41,7 +32,7 @@ module.exports = function(app){
 			console.log("Saved articles",data);
 			
 			if(data.length === 0) {
-				// res.render("placeholder", {message: "You have not saved any articles yet. Try to save some delicious news by simply clicking \"Save Article\"!"});
+				// res.render("saved", {message: "You have not saved any articles yet. Try to save some delicious news by simply clicking \"Save Article\"!"});
 				console.log('There are no saved articles');
 			} else {
 				var hbsArticleObject = {
@@ -51,46 +42,42 @@ module.exports = function(app){
 			}
 		});
 	});
-
+	
+	//delete article
 	app.post("/delete/:id", function(req, res) {
 		HeadlineController.deleteArticle(req);	
 		res.send('success');
 	});
 
-	//Get notes when modal is clicked 	
+	//get notes when modal is clicked 	
 	app.get("/articles/:id", function(req, res) {
 		NotesController.getAllNotes(req,function(data){
 		res.json(data);
 		});
 	});
 
-	  // Create a new note or replace an existing note
+	  // create a new note or replace an existing note
 	app.post("/articles/:id", function(req, res) {
 		NotesController.postNotes(req);
 		res.send('Successfully saved note');
 	});
 
+	//delete note
 	app.get("/notes/:id", function(req, res) {
 		NotesController.deleteNotes(req, function(data){
 			res.json(data);
 		});
 	});
 
-	// app.get("/notes/:id", function(req, res) {
 
-	// 	console.log("Note ID ", req.params.id);
-	  
-	// 	console.log("Able to activate delete function.");
-	  
-	// 	Note.findOneAndRemove({"_id": req.params.id}, function (err, doc) {
-	// 	  if (err) {
-	// 		console.log("Not able to delete:" + err);
-	// 	  } else {
-	// 		console.log("Able to delete, Yay");
-	// 	  }
-	// 	  res.send(doc);
+	//Fail - I couldn't get the home page to reload once the scrape was done 
+	//===========================
+	// app.get("/scrape", function(req, res) {
+	// 	ScrapeController.scrapeHeadlines(function(data){
+	// 	
+	// 		// res.redirect('/');
 	// 	});
-	//   });
+// });
 
 
 	app.get("/scrape", function(req, res) {

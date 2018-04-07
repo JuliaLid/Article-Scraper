@@ -10,7 +10,7 @@ $(document).ready(function() {
 		.done(function(data) {
 			console.log(data);
        window.location.href = "/";
-      // location.reload();
+    
     });
  
 	});
@@ -20,7 +20,7 @@ $(document).ready(function() {
         // Grab the id associated with the article from the submit button
         var thisId = $(this).attr("data-id");
 		   
-		console.log("Saving article");
+		    console.log("Saving article");
         console.log(thisId);
      
         $.ajax({
@@ -48,7 +48,7 @@ $(document).ready(function() {
 		window.location.href = "/saved";
     });
 
-	//modal to
+	//modal to save a note and generate exisiting notes
     $(document).on("click","#modalbutton", function() {
         console.log("Modal button is clicked");
         // Empty the notes from the note section and remove dynamically generated Save note button

@@ -18,9 +18,9 @@ exports.saveArticle = function(req){
     Headline.findByIdAndUpdate(req.params.id, {$set: {issaved: true, status: "Saved"}}, {new: true}, function(err, data) {
         if(err){
             console.log(err);
-            } else {
-                console.log("Article is saved")
-            }
+        } else {
+            console.log("Article is saved")
+        }
     });
 };
 

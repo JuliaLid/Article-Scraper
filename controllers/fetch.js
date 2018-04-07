@@ -1,4 +1,5 @@
-//Dep
+//I wasn't able to get it this controller to work
+
 var db = require("../models/index.js");
 var Headline = require("../models/Headline.js");
 var axios = require("axios");

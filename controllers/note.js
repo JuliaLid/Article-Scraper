@@ -1,6 +1,6 @@
-var db = require("../models/index.js");
 var Headline = require("../models/Headline.js");
 var Note = require("../models/Note.js");
+
 
 exports.getAllNotes = function(req,cb) {
     Headline.findOne({"_id": req.params.id})
