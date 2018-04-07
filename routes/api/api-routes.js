@@ -70,16 +70,16 @@ module.exports = function(app){
 	});
 
 
-	//Fail - I couldn't get the home page to reload once the scrape was done 
+	//Fail - I couldn't get the home page to reload once the scrape was done BUT I'm very close
 	//===========================
 	// app.get("/scrape", function(req, res) {
 	// 	ScrapeController.scrapeHeadlines(function(data){
-	// 	
+	// 	 	res.json(data);
 	// 		// res.redirect('/');
 	// 	});
-// });
+	// });
 
-
+	//Scrape articles 
 	app.get("/scrape", function(req, res) {
 		axios.get("https://www.nytimes.com/spotlight/royal-wedding").then(function(response) {
 		  // Then, we load that into cheerio and save it to $ for a shorthand selector
